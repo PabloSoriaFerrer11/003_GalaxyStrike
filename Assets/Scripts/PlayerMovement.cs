@@ -9,9 +9,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float yClampRange = 9f;
 
     [SerializeField] private float controlRollFactor = 25f;
+    [SerializeField] private float controlPitchFactor = 15f;
     
 
     Vector2 movementInput;
+
 
     void Start()
     {
@@ -48,18 +50,28 @@ public class PlayerMovement : MonoBehaviour
 
     private void RotationProcess()
     {
+        float pitch = -controlPitchFactor * movementInput.y;
+        float roll = -controlRollFactor * movementInput.x;
+
         // Quaternion.Euler permite rotar el jugador en los ejes X, Y y Z
         // El negativo en el eje Z es para que el jugador rote hacia la izquierda cuando se mueve a la derecha y viceversa
-        Quaternion target = Quaternion.Euler(0f, 0f, -controlRollFactor * movementInput.x);
+        Quaternion target = Quaternion.Euler(pitch, 0f, roll);
 
         // lerp permite suavizar la rotación del jugador para que no sea tan brusca
         transform.localRotation = Quaternion.Lerp(transform.localRotation, target, Time.deltaTime * rotationSpeed);
         //transform.localRotation = target;
+
+
     }
 
     public void OnMove(InputValue value)
     {
         // Se obtiene el valor del input del jugador
         movementInput = value.Get<Vector2>();
+    }
+
+    public void OnFire(InputValue value)
+    {
+        
     }
 }
