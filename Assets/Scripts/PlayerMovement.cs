@@ -70,8 +70,5 @@ public class PlayerMovement : MonoBehaviour
         movementInput = value.Get<Vector2>();
     }
 
-    public void OnFire(InputValue value)
-    {
-        
-    }
+  
 }
